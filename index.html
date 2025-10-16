@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Alarmas Comunitarias</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --primary: #3498db;
+            --primary-light: #5dade2;
+            --primary-dark: #2980b9;
+            --secondary: #2c3e50;
+            --accent: #1abc9c;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #ecf0f1;
+            --text: #34495e;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 10px;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+            color: var(--text);
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,192C1248,192,1344,128,1392,96L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+            color: var(--white);
+            padding: 18px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .intro-text {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .intro-text p {
+            margin-bottom: 15px;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gray);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: var(--light);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            background-color: var(--white);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        
+        .checkbox-item:hover {
+            background: var(--primary-light);
+            color: white;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .map-container {
+            height: 400px;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--gray);
+        }
+        
+        .coordinates-display {
+            background: linear-gradient(to right, var(--light), var(--gray));
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--secondary);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .agreement {
+            background: linear-gradient(to right, #e1f5fe, #e8f5e9);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin: 25px 0;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .agreement h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .agreement-checkbox {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            background: var(--white);
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .agreement-checkbox input {
+            width: auto;
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+        }
+        
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .progress-steps {
+            display: flex;
+            background: var(--white);
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: var(--shadow);
+        }
+        
+        .step {
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .step.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .step.completed {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            background: var(--light);
+            color: var(--secondary);
+            border: 2px solid var(--gray);
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .nav-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .progress-steps {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .step {
+                border-radius: 5px;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Encuesta de Alarmas Comunitarias</h1>
+            <p>Municipalidad de La Plata - Seguridad Ciudadana</p>
+        </header>
+        
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="step active" data-step="1">Datos Personales</div>
+                <div class="step" data-step="2">Ubicación</div>
+                <div class="step" data-step="3">Dispositivos</div>
+                <div class="step" data-step="4">Protocolos</div>
+                <div class="step" data-step="5">Confirmación</div>
+            </div>
+        </div>
+        
+        <form id="alarmForm">
+            <div class="section active" id="section-1">
+                <div class="card">
+                    <div class="card-header">
+                        <i>👤</i> DATOS DEL REFERENTE
+                    </div>
+                    <div class="card-body">
+                        <p>El referente actúa como representante de un grupo de vecinos y los datos aportados son el resultado de la consulta, el consenso general y la aceptación de una posible conexión de las alarmas vecinales al Centro de operaciones Municipales</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fecha">FECHA <span class="required">*</span></label>
+                                <input type="date" id="fecha" name="fecha" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="nombre">NOMBRE Y APELLIDO <span class="required">*</span></label>
+                                <input type="text" id="nombre" name="nombre" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefono">TELÉFONO DE CONTACTO <span class="required">*</span></label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="zona">ZONA/DELEGACIÓN <span class="required">*</span></label>
+                                <input type="text" id="zona" name="zona" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="barrio">BARRIO <span class="required">*</span></label>
+                            <input type="text" id="barrio" name="barrio" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <div></div>
+                    <button type="button" class="nav-btn next-btn" data-next="2">Siguiente →</button>
+                </div>
+            </div>
+            
+            <div class="section" id="section-2">
+                <div class="card">
+                    <div class="card-header">
+                        <i>📍</i> MAPEO DE ALARMA VECINAL
+                    </div>
+                    <div class="card-body">
+                        <p>Seleccione en el mapa la calle en la que se encuentran emplazadas las alarmas vecinales</p>
+                        
+                        <div id="map" class="map-container"></div>
+                        <div class="coordinates-display" id="coordinates">
+                            Coordenadas: No seleccionadas
+                        </div>
+                        <input type="hidden" id="latitud" name="latitud">
+                        <input type="hidden" id="longitud" name="longitud">
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button type="button" class="nav-btn prev-btn" data-prev="1">← Anterior</button>
+                    <button type="button" class="nav-btn next-btn" data-next="3">Siguiente →</button>
+                </div>
+            </div>
+            
+            <div class="section" id="section-3">
+                <div class="card">
+                    <div class="card-header">
+                        <i>🔧</i> DISPOSITIVOS
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="marca">MARCA DE DISPOSITIVO <span class="required">*</span></label>
+                                <input type="text" id="marca" name="marca" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contacto">CONTACTO DE EMPRESA DE ALARMA <span class="required">*</span></label>
+                                <input type="text" id="contacto" name="contacto" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fechaInstalacion">FECHA DE INSTALACIÓN (APROXIMADA)</label>
+                                <input type="date" id="fechaInstalacion" name="fechaInstalacion">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gestion">TIPO DE GESTIÓN DE ALARMA VECINAL <span class="required">*</span></label>
+                                <select id="gestion" name="gestion" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="institucion">INSTITUCIÓN</option>
+                                    <option value="frentista-individual">FRENTISTA INDIVIDUAL</option>
+                                    <option value="frentista-grupal">FRENTISTA GRUPAL</option>
+                                    <option value="manzana">MANZANA</option>
+                                    <option value="barrio">BARRIO</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                                <input type="text" id="gestion-otros" name="gestion-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="instalacion">INSTALACIÓN (QUIÉN INSTALÓ LOS DISPOSITIVOS) <span class="required">*</span></label>
+                                <select id="instalacion" name="instalacion" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="vecinos">LOS PROPIOS VECINOS</option>
+                                    <option value="empresa">INSTALADOR O EMPRESA DE ALARMAS</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="emplazamiento">TIPO DE EMPLAZAMIENTO <span class="required">*</span></label>
+                                <select id="emplazamiento" name="emplazamiento" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="poste-alumbrado">POSTE ALUMBRADO PÚBLICO</option>
+                                    <option value="poste-internet">POSTE INTERNET</option>
+                                    <option value="conexion-particular">CONEXIÓN PARTICULAR</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                                <input type="text" id="emplazamiento-otros" name="emplazamiento-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cantidad-sirenas">CANTIDAD DE SIRENA POR GRUPO DE VECINOS (SOLO NÚMERO) <span class="required">*</span></label>
+                                <input type="number" id="cantidad-sirenas" name="cantidad-sirenas" min="0" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cantidad-pulsadores">CANTIDAD DE PULSADORES POR GRUPO DE VECINOS (SOLO NÚMERO) <span class="required">*</span></label>
+                                <input type="number" id="cantidad-pulsadores" name="cantidad-pulsadores" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tipo-activacion">TIPO DE DISPOSITIVO DE ACTIVACIÓN <span class="required">*</span></label>
+                            <select id="tipo-activacion" name="tipo-activacion" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="boton-fisico">PULSADOR POR BOTÓN FÍSICO (RF)</option>
+                                <option value="telefono">PULSADOR POR TELÉFONO (GSM/GPRS)</option>
+                                <option value="dual">PULSADOR DUAL</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                            <input type="text" id="activacion-otros" name="activacion-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>COMPONENTES</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sirena" name="componentes" value="sirena">
+                                    <label for="sirena">SIRENA</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="baliza" name="componentes" value="baliza">
+                                    <label for="baliza">BALIZA</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="bateria" name="componentes" value="bateria">
+                                    <label for="bateria">BATERÍA DE RESPALDO</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="reflector" name="componentes" value="reflector">
+                                    <label for="reflector">REFLECTOR</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sensor" name="componentes" value="sensor">
+                                    <label for="sensor">SENSOR DE MOVIMIENTO</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="gabinete" name="componentes" value="gabinete">
+                                    <label for="gabinete">GABINETE PROTECTOR</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="receptor" name="componentes" value="receptor">
+                                    <label for="receptor">RECEPTOR DE RADIOFRECUENCIA</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="modulo" name="componentes" value="modulo">
+                                    <label for="modulo">MÓDULO GSM/GPRS</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="componentes-otros" name="componentes" value="otros">
+                                    <label for="componentes-otros">Otros</label>
+                                </div>
+                            </div>
+                            <input type="text" id="componentes-otros-texto" name="componentes-otros-texto" placeholder="Especifique otros componentes" style="display: none; margin-top: 10px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mantenimiento">MANTENIMIENTO <span class="required">*</span></label>
+                            <select id="mantenimiento" name="mantenimiento" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="frecuente">FRECUENTE</option>
+                                <option value="poco-frecuente">POCO FRECUENTE</option>
+                                <option value="nulo">NULO</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                            <input type="text" id="mantenimiento-otros" name="mantenimiento-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button type="button" class="nav-btn prev-btn" data-prev="2">← Anterior</button>
+                    <button type="button" class="nav-btn next-btn" data-next="4">Siguiente →</button>
+                </div>
+            </div>
+            
+            <div class="section" id="section-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i>📋</i> PROTOCOLOS Y COMUNICACIÓN
+                    </div>
+                    <div class="card-body">
+                        <p>Por protocolo debemos entender si existen acuerdos y consensos para la activación de alertas entre los vecinos agrupados</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="acuerdos">¿EXISTEN ACUERDOS PARA EL USO RESPONSABLE? <span class="required">*</span></label>
+                                <select id="acuerdos" name="acuerdos" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="si">SI</option>
+                                    <option value="no">No</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                                <input type="text" id="acuerdos-otros" name="acuerdos-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="comunicacion-redes">¿EXISTE COMUNICACIÓN VÍA REDES SOCIALES ENTRE LOS VECINOS AGRUPADOS? <span class="required">*</span></label>
+                                <select id="comunicacion-redes" name="comunicacion-redes" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="si">SI</option>
+                                    <option value="no">No</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                                <input type="text" id="comunicacion-redes-otros" name="comunicacion-redes-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>REDES DIGITALES DE COMUNICACIÓN</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="whatsapp" name="redes" value="whatsapp">
+                                    <label for="whatsapp">WHATSAPP</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="facebook" name="redes" value="facebook">
+                                    <label for="facebook">FACEBOOK</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="ninguna-red" name="redes" value="ninguna">
+                                    <label for="ninguna-red">NINGUNA</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="redes-otros" name="redes" value="otros">
+                                    <label for="redes-otros">Otros</label>
+                                </div>
+                            </div>
+                            <input type="text" id="redes-otros-texto" name="redes-otros-texto" placeholder="Especifique otras redes" style="display: none; margin-top: 10px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="frecuencia-uso">FRECUENCIA DE USO <span class="required">*</span></label>
+                            <select id="frecuencia-uso" name="frecuencia-uso" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="poco-frecuente">POCO FRECUENTE</option>
+                                <option value="muy-frecuente">MUY FRECUENTE</option>
+                                <option value="nula">NULA</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button type="button" class="nav-btn prev-btn" data-prev="3">← Anterior</button>
+                    <button type="button" class="nav-btn next-btn" data-next="5">Siguiente →</button>
+                </div>
+            </div>
+            
+            <div class="section" id="section-5">
+                <div class="card">
+                    <div class="card-header">
+                        <i>✅</i> CONFIRMACIÓN Y ACUERDO
+                    </div>
+                    <div class="card-body">
+                        <div class="agreement">
+                            <h3>ACUERDO DE CONFORMIDAD</h3>
+                            <p>Al marcar esta casilla, confirmo que la información proporcionada en este formulario es veraz y completa. Acepto que los datos suministrados serán utilizados para los fines establecidos en relación con el mapeo e integración de las alarmas comunitarias al Centro de Operaciones Municipales, de acuerdo con los objetivos descritos en este formulario.</p>
+                            
+                            <div class="agreement-checkbox">
+                                <input type="checkbox" id="acuerdo" name="acuerdo" required>
+                                <label for="acuerdo">Acepto los términos y condiciones <span class="required">*</span></label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn" id="submitBtn">ENVIAR FORMULARIO</button>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button type="button" class="nav-btn prev-btn" data-prev="4">← Anterior</button>
+                    <div></div> 
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([-34.9214, -57.9544], 13); // Coordenadas de La Plata
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        var marker;
+        
+        map.on('click', function(e) {
+            // Eliminar marcador existente
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            
+            marker = L.marker(e.latlng).addTo(map);
+            
+            document.getElementById('latitud').value = e.latlng.lat;
+            document.getElementById('longitud').value = e.latlng.lng;
+            document.getElementById('coordinates').textContent = 
+                'Coordenadas: ' + e.latlng.lat.toFixed(6) + ', ' + e.latlng.lng.toFixed(6);
+        });
+        
+        document.querySelectorAll('.next-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const currentSection = document.querySelector('.section.active');
+                const nextSectionId = this.getAttribute('data-next');
+                const nextSection = document.getElementById(`section-${nextSectionId}`);
+                
+                document.querySelectorAll('.step').forEach(step => {
+                    if (parseInt(step.getAttribute('data-step')) === parseInt(nextSectionId)) {
+                        step.classList.add('active');
+                    }
+                    if (parseInt(step.getAttribute('data-step')) === parseInt(nextSectionId) - 1) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    }
+                });
+                
+                currentSection.classList.remove('active');
+                nextSection.classList.add('active');
+            });
+        });
+        
+        document.querySelectorAll('.prev-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const currentSection = document.querySelector('.section.active');
+                const prevSectionId = this.getAttribute('data-prev');
+                const prevSection = document.getElementById(`section-${prevSectionId}`);
+                
+                // Actualizar pasos de progreso
+                document.querySelectorAll('.step').forEach(step => {
+                    if (parseInt(step.getAttribute('data-step')) === parseInt(prevSectionId)) {
+                        step.classList.add('active');
+                    }
+                    if (parseInt(step.getAttribute('data-step')) === parseInt(prevSectionId) + 1) {
+                        step.classList.remove('active');
+                        step.classList.remove('completed');
+                    }
+                });
+                
+                currentSection.classList.remove('active');
+                prevSection.classList.add('active');
+            });
+        });
+        
+        document.getElementById('gestion').addEventListener('change', function() {
+            document.getElementById('gestion-otros').style.display = 
+                this.value === 'otros' ? 'block' : 'none';
+        });
+        
+        document.getElementById('emplazamiento').addEventListener('change', function() {
+            document.getElementById('emplazamiento-otros').style.display = 
+                this.value === 'otros' ? 'block' : 'none';
+        });
+        
+        document.getElementById('tipo-activacion').addEventListener('change', function() {
+            document.getElementById('activacion-otros').style.display = 
+                this.value === 'otros' ? 'block' : 'none';
+        });
+        
+        document.getElementById('mantenimiento').addEventListener('change', function() {
+            document.getElementById('mantenimiento-otros').style.display = 
+                this.value === 'otros' ? 'block' : 'none';
+        });
+        
+        document.getElementById('acuerdos').addEventListener('change', function() {
+            document.getElementById('acuerdos-otros').style.display = 
+                this.value === 'otros' ? 'block' : 'none';
+        });
+        
+        document.getElementById('comunicacion-redes').addEventListener('change', function() {
+            document.getElementById('comunicacion-redes-otros').style.display = 
+                this.value === 'otros' ? 'block' : 'none';
+        });
+        
+        document.getElementById('componentes-otros').addEventListener('change', function() {
+            document.getElementById('componentes-otros-texto').style.display = 
+                this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('redes-otros').addEventListener('change', function() {
+            document.getElementById('redes-otros-texto').style.display = 
+                this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('alarmForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!document.getElementById('latitud').value) {
+                alert('Por favor, seleccione una ubicación en el mapa antes de enviar el formulario.');
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById('section-2').classList.add('active');
+                return;
+            }
+            
+
+            alert('Formulario enviado correctamente. Gracias por su participación.');
+            
+            this.reset();
+            if (marker) {
+                map.removeLayer(marker);
+                marker = null;
+            }
+            document.getElementById('coordinates').textContent = 'Coordenadas: No seleccionadas';
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('section-1').classList.add('active');
+            
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            document.querySelector('.step[data-step="1"]').classList.add('active');
+        });
+        
+        document.getElementById('fecha').valueAsDate = new Date();
+    </script>
+</body>
+</html>
