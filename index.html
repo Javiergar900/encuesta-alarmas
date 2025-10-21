@@ -33,22 +33,22 @@
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             min-height: 100vh;
-            padding: 20px 0;
+            padding: 10px 0;
         }
         
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
         
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--white);
-            padding: 30px 0;
+            padding: 25px 0;
             text-align: center;
             border-radius: var(--radius);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
@@ -69,91 +69,94 @@
         header h1 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
             position: relative;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0 10px;
         }
         
         header p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             opacity: 0.9;
             position: relative;
+            padding: 0 10px;
         }
         
         .card {
             background-color: var(--white);
             border-radius: var(--radius);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             box-shadow: var(--shadow);
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
         }
         
         .card-header {
             background: linear-gradient(to right, var(--primary-light), var(--primary));
             color: var(--white);
-            padding: 18px 25px;
+            padding: 15px 20px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
         }
         
         .card-header i {
-            margin-right: 10px;
-            font-size: 1.5rem;
+            margin-right: 8px;
+            font-size: 1.3rem;
         }
         
         .card-body {
-            padding: 25px;
+            padding: 20px;
         }
         
         .intro-text {
             max-height: 300px;
             overflow-y: auto;
             padding-right: 10px;
+            font-size: 0.9rem;
         }
         
         .intro-text p {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         h2 {
             color: var(--secondary);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 1.5rem;
-            padding-bottom: 10px;
+            font-size: 1.3rem;
+            padding-bottom: 8px;
             border-bottom: 2px solid var(--gray);
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--secondary);
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         input, select, textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 2px solid var(--gray);
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 16px; 
             transition: all 0.3s;
             background-color: var(--light);
         }
@@ -168,17 +171,18 @@
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 8px;
         }
         
         .checkbox-item {
             display: flex;
             align-items: center;
             background: var(--light);
-            padding: 8px 15px;
-            border-radius: 30px;
+            padding: 6px 12px;
+            border-radius: 20px;
             transition: all 0.3s;
+            font-size: 0.85rem;
         }
         
         .checkbox-item:hover {
@@ -188,78 +192,85 @@
         
         .checkbox-item input {
             width: auto;
-            margin-right: 8px;
+            margin-right: 6px;
         }
         
         .map-container {
-            height: 400px;
-            margin: 20px 0;
+            height: 350px;
+            margin: 15px 0;
             border-radius: 8px;
             overflow: hidden;
             border: 2px solid var(--gray);
+            position: relative;
+        }
+        
+        .map-container.leaflet-container {
+            background-color: var(--light) !important;
         }
         
         .coordinates-display {
             background: linear-gradient(to right, var(--light), var(--gray));
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-top: 8px;
             font-family: monospace;
             font-weight: 600;
             color: var(--secondary);
             border-left: 4px solid var(--accent);
+            font-size: 0.9rem;
         }
         
         .agreement {
             background: linear-gradient(to right, #e1f5fe, #e8f5e9);
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--radius);
-            margin: 25px 0;
+            margin: 20px 0;
             border-left: 5px solid var(--accent);
         }
         
         .agreement h3 {
             color: var(--secondary);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
         }
         
         .agreement-checkbox {
             display: flex;
             align-items: center;
-            margin-top: 15px;
+            margin-top: 12px;
             background: var(--white);
-            padding: 12px 15px;
-            border-radius: 8px;
+            padding: 10px 12px;
+            border-radius: 6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .agreement-checkbox input {
             width: auto;
-            margin-right: 10px;
-            transform: scale(1.2);
+            margin-right: 8px;
+            transform: scale(1.1);
         }
         
         .btn {
             background: linear-gradient(to right, var(--primary), var(--primary-dark));
             color: white;
             border: none;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             transition: all 0.3s;
             display: block;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 15px;
             font-family: 'Montserrat', sans-serif;
             letter-spacing: 0.5px;
             box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
         }
         
         .btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
             background: linear-gradient(to right, var(--primary-dark), var(--primary));
         }
@@ -277,7 +288,7 @@
         
         .form-row {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
         
         .form-row .form-group {
@@ -287,24 +298,29 @@
         .progress-container {
             display: flex;
             justify-content: center;
-            margin: 30px 0;
+            margin: 20px 0;
         }
         
         .progress-steps {
             display: flex;
             background: var(--white);
             border-radius: 50px;
-            padding: 5px;
+            padding: 4px;
             box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 500px;
         }
         
         .step {
-            padding: 10px 25px;
+            padding: 8px 12px;
             border-radius: 50px;
             font-weight: 600;
             font-family: 'Montserrat', sans-serif;
             transition: all 0.3s;
             cursor: pointer;
+            text-align: center;
+            flex: 1;
+            font-size: 0.8rem;
         }
         
         .step.active {
@@ -328,19 +344,23 @@
         .navigation {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 20px;
+            gap: 10px;
         }
         
         .nav-btn {
             background: var(--light);
             color: var(--secondary);
             border: 2px solid var(--gray);
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
             font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            flex: 1;
+            text-align: center;
         }
         
         .nav-btn:hover {
@@ -349,7 +369,72 @@
             border-color: var(--primary);
         }
         
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 12px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(to right, #d4edda, #c3e6cb);
+            color: #155724;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            text-align: center;
+            border-left: 5px solid #28a745;
+        }
+        
+        .error-message {
+            display: none;
+            background: linear-gradient(to right, #f8d7da, #f5c6cb);
+            color: #721c24;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            text-align: center;
+            border-left: 5px solid #dc3545;
+        }
+        
+        /* Mejoras de responsividad para móviles */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            header {
+                padding: 20px 0;
+                margin-bottom: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            header p {
+                font-size: 0.9rem;
+            }
+            
+            .card-body {
+                padding: 15px;
+            }
+            
             .form-row {
                 flex-direction: column;
                 gap: 0;
@@ -358,31 +443,87 @@
             .progress-steps {
                 flex-direction: column;
                 border-radius: 10px;
+                max-width: 100%;
             }
             
             .step {
                 border-radius: 5px;
-                margin-bottom: 5px;
-                text-align: center;
+                margin-bottom: 2px;
+                padding: 10px;
+                font-size: 0.8rem;
             }
             
-            header h1 {
-                font-size: 2rem;
+            .map-container {
+                height: 300px;
+            }
+            
+            .checkbox-group {
+                gap: 8px;
+            }
+            
+            .checkbox-item {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .nav-btn {
+                padding: 12px 10px;
+                font-size: 0.85rem;
+            }
+            
+            input, select, textarea {
+                font-size: 16px;
             }
         }
         
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .card-header {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+            
+            .map-container {
+                height: 250px;
+            }
+            
+            .step {
+                font-size: 0.75rem;
+                padding: 8px 5px;
+            }
+            
+            .btn {
+                padding: 14px 15px;
+                font-size: 15px;
+            }
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
-            border-radius: 10px;
+            border-radius: 8px;
         }
         
         ::-webkit-scrollbar-thumb {
             background: var(--primary-light);
-            border-radius: 10px;
+            border-radius: 8px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
@@ -393,7 +534,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Plan Municipal de Alarmas Comunitarias</h1>
+            <h1>Encuesta de Alarmas Comunitarias</h1>
             <p>Municipalidad de La Plata - Secretaría de Seguridad</p>
         </header>
         
@@ -407,6 +548,21 @@
             </div>
         </div>
         
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Enviando formulario a la base de datos...</p>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <h3>✅ Formulario enviado exitosamente</h3>
+            <p>Los datos han sido guardados correctamente en la base de datos.</p>
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            <h3>❌ Error al enviar el formulario</h3>
+            <p id="errorText">Ha ocurrido un error. Por favor, intente nuevamente.</p>
+        </div>
+        
         <form id="alarmForm">
             <div class="section active" id="section-1">
                 <div class="card">
@@ -414,7 +570,10 @@
                         <i>👤</i> DATOS DEL REFERENTE
                     </div>
                     <div class="card-body">
-                        <p>El referente actúa como representante de un grupo de vecinos y los datos aportados son el resultado de la consulta, el consenso general y la aceptación de una posible conexión de las alarmas vecinales al Centro de operaciones Municipales</p>
+                        <div class="intro-text">
+                            <p><strong>¡Atención!</strong><br>
+                            El referente actúa como interlocutor entre el grupo de vecinos y el municipio, aportando los datos técnicos necesarios mediante la consulta, el consenso general y la aceptación de una posible conexión de las alarmas vecinales al Centro de operaciones Municipales</p>
+                        </div>
                         
                         <div class="form-row">
                             <div class="form-group">
@@ -423,8 +582,8 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="nombre">NOMBRE Y APELLIDO <span class="required">*</span></label>
-                                <input type="text" id="nombre" name="nombre" required>
+                                <label for="nombre-apellido">NOMBRE Y APELLIDO <span class="required">*</span></label>
+                                <input type="text" id="nombre-apellido" name="nombre-apellido" required>
                             </div>
                         </div>
                         
@@ -435,8 +594,8 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="zona">ZONA/DELEGACIÓN <span class="required">*</span></label>
-                                <input type="text" id="zona" name="zona" required>
+                                <label for="zona-deleg">ZONA/DELEGACIÓN <span class="required">*</span></label>
+                                <input type="text" id="zona-deleg" name="zona-deleg" required>
                             </div>
                         </div>
                         
@@ -465,8 +624,7 @@
                         <div class="coordinates-display" id="coordinates">
                             Coordenadas: No seleccionadas
                         </div>
-                        <input type="hidden" id="latitud" name="latitud">
-                        <input type="hidden" id="longitud" name="longitud">
+                        <input type="hidden" id="coordenadas" name="coordenadas">
                     </div>
                 </div>
                 
@@ -484,25 +642,25 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="marca">MARCA DE DISPOSITIVO <span class="required">*</span></label>
-                                <input type="text" id="marca" name="marca" required>
+                                <label for="marca-disp">MARCA DE DISPOSITIVO <span class="required">*</span></label>
+                                <input type="text" id="marca-disp" name="marca-disp" required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="contacto">CONTACTO DE EMPRESA DE ALARMA <span class="required">*</span></label>
-                                <input type="text" id="contacto" name="contacto" required>
+                                <label for="contacto-empresa">CONTACTO DE EMPRESA DE ALARMA <span class="required">*</span></label>
+                                <input type="text" id="contacto-empresa" name="contacto-empresa" required>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="fechaInstalacion">FECHA DE INSTALACIÓN (APROXIMADA)</label>
-                                <input type="date" id="fechaInstalacion" name="fechaInstalacion">
+                                <label for="fech-instalacion">FECHA DE INSTALACIÓN (APROXIMADA)</label>
+                                <input type="date" id="fech-instalacion" name="fech-instalacion">
                             </div>
                             
                             <div class="form-group">
-                                <label for="gestion">TIPO DE GESTIÓN DE ALARMA VECINAL <span class="required">*</span></label>
-                                <select id="gestion" name="gestion" required>
+                                <label for="tipo-gestion-alarma">TIPO DE GESTIÓN DE ALARMA VECINAL <span class="required">*</span></label>
+                                <select id="tipo-gestion-alarma" name="tipo-gestion-alarma" required>
                                     <option value="">Seleccione una opción</option>
                                     <option value="institucion">INSTITUCIÓN</option>
                                     <option value="frentista-individual">FRENTISTA INDIVIDUAL</option>
@@ -511,14 +669,14 @@
                                     <option value="barrio">BARRIO</option>
                                     <option value="otros">Otros</option>
                                 </select>
-                                <input type="text" id="gestion-otros" name="gestion-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                                <input type="text" id="tipo-gestion-alarma-otros" name="tipo-gestion-alarma-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="instalacion">INSTALACIÓN (QUIÉN INSTALÓ LOS DISPOSITIVOS) <span class="required">*</span></label>
-                                <select id="instalacion" name="instalacion" required>
+                                <label for="instalador">INSTALACIÓN (QUIÉN INSTALÓ LOS DISPOSITIVOS) <span class="required">*</span></label>
+                                <select id="instalador" name="instalador" required>
                                     <option value="">Seleccione una opción</option>
                                     <option value="vecinos">LOS PROPIOS VECINOS</option>
                                     <option value="empresa">INSTALADOR O EMPRESA DE ALARMAS</option>
@@ -551,15 +709,15 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="tipo-activacion">TIPO DE DISPOSITIVO DE ACTIVACIÓN <span class="required">*</span></label>
-                            <select id="tipo-activacion" name="tipo-activacion" required>
+                            <label for="tipo-dispositivo-activacion">TIPO DE DISPOSITIVO DE ACTIVACIÓN <span class="required">*</span></label>
+                            <select id="tipo-dispositivo-activacion" name="tipo-dispositivo-activacion" required>
                                 <option value="">Seleccione una opción</option>
                                 <option value="boton-fisico">PULSADOR POR BOTÓN FÍSICO (RF)</option>
                                 <option value="telefono">PULSADOR POR TELÉFONO (GSM/GPRS)</option>
                                 <option value="dual">PULSADOR DUAL</option>
                                 <option value="otros">Otros</option>
                             </select>
-                            <input type="text" id="activacion-otros" name="activacion-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                            <input type="text" id="tipo-dispositivo-activacion-otros" name="tipo-dispositivo-activacion-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                         </div>
                         
                         <div class="form-group">
@@ -631,29 +789,28 @@
                         <i>📋</i> PROTOCOLOS Y COMUNICACIÓN
                     </div>
                     <div class="card-body">
-                        <p>Por protocolo debemos entender si existen acuerdos y consensos para la activación de alertas entre los vecinos agrupados</p>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="acuerdos">¿EXISTEN ACUERDOS PARA EL USO RESPONSABLE? <span class="required">*</span></label>
-                                <select id="acuerdos" name="acuerdos" required>
+                                <label for="acuerdo-uso-responsable">¿EXISTEN ACUERDOS PARA EL USO RESPONSABLE? <span class="required">*</span></label>
+                                <select id="acuerdo-uso-responsable" name="acuerdo-uso-responsable" required>
                                     <option value="">Seleccione una opción</option>
                                     <option value="si">SI</option>
                                     <option value="no">No</option>
                                     <option value="otros">Otros</option>
                                 </select>
-                                <input type="text" id="acuerdos-otros" name="acuerdos-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                                <input type="text" id="acuerdo-uso-responsable-otros" name="acuerdo-uso-responsable-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                             </div>
                             
                             <div class="form-group">
-                                <label for="comunicacion-redes">¿EXISTE COMUNICACIÓN VÍA REDES SOCIALES ENTRE LOS VECINOS AGRUPADOS? <span class="required">*</span></label>
-                                <select id="comunicacion-redes" name="comunicacion-redes" required>
+                                <label for="comunicacion-via-redes">¿EXISTE COMUNICACIÓN VÍA REDES SOCIALES ENTRE LOS VECINOS AGRUPADOS? <span class="required">*</span></label>
+                                <select id="comunicacion-via-redes" name="comunicacion-via-redes" required>
                                     <option value="">Seleccione una opción</option>
                                     <option value="si">SI</option>
                                     <option value="no">No</option>
                                     <option value="otros">Otros</option>
                                 </select>
-                                <input type="text" id="comunicacion-redes-otros" name="comunicacion-redes-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                                <input type="text" id="comunicacion-via-redes-otros" name="comunicacion-via-redes-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                             </div>
                         </div>
                         
@@ -661,23 +818,23 @@
                             <label>REDES DIGITALES DE COMUNICACIÓN</label>
                             <div class="checkbox-group">
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="whatsapp" name="redes" value="whatsapp">
+                                    <input type="checkbox" id="whatsapp" name="redes-comunicacion" value="whatsapp">
                                     <label for="whatsapp">WHATSAPP</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="facebook" name="redes" value="facebook">
+                                    <input type="checkbox" id="facebook" name="redes-comunicacion" value="facebook">
                                     <label for="facebook">FACEBOOK</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="ninguna-red" name="redes" value="ninguna">
+                                    <input type="checkbox" id="ninguna-red" name="redes-comunicacion" value="ninguna">
                                     <label for="ninguna-red">NINGUNA</label>
                                 </div>
                                 <div class="checkbox-item">
-                                    <input type="checkbox" id="redes-otros" name="redes" value="otros">
-                                    <label for="redes-otros">Otros</label>
+                                    <input type="checkbox" id="redes-comunicacion-otros" name="redes-comunicacion" value="otros">
+                                    <label for="redes-comunicacion-otros">Otros</label>
                                 </div>
                             </div>
-                            <input type="text" id="redes-otros-texto" name="redes-otros-texto" placeholder="Especifique otras redes" style="display: none; margin-top: 10px;">
+                            <input type="text" id="redes-comunicacion-otros-texto" name="redes-comunicacion-otros-texto" placeholder="Especifique otras redes" style="display: none; margin-top: 10px;">
                         </div>
                         
                         <div class="form-group">
@@ -728,32 +885,49 @@
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([-34.9214, -57.9544], 13); // Coordenadas de La Plata
+        const SHEETBEST_API_URL = 'https://api.sheetbest.com/sheets/4115349e-52ff-494a-8a41-9e690ffb17b4';
         
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        
-        var marker;
-        
-        map.on('click', function(e) {
-            // Eliminar marcador existente
-            if (marker) {
-                map.removeLayer(marker);
-            }
+        function initializeMap() {
+            var map = L.map('map').setView([-34.9214, -57.9544], 13);
             
-            marker = L.marker(e.latlng).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+            }).addTo(map);
             
-            document.getElementById('latitud').value = e.latlng.lat;
-            document.getElementById('longitud').value = e.latlng.lng;
-            document.getElementById('coordinates').textContent = 
-                'Coordenadas: ' + e.latlng.lat.toFixed(6) + ', ' + e.latlng.lng.toFixed(6);
-        });
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 100);
+            
+            var marker;
+            
+            map.on('click', function(e) {
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+                
+                marker = L.marker(e.latlng).addTo(map);
+                
+                const coordenadas = e.latlng.lat.toFixed(6) + ', ' + e.latlng.lng.toFixed(6);
+                document.getElementById('coordenadas').value = coordenadas;
+                document.getElementById('coordinates').textContent = 'Coordenadas: ' + coordenadas;
+            });
+            
+            return map;
+        }
         
+        let map;
         document.querySelectorAll('.next-btn').forEach(button => {
             button.addEventListener('click', function() {
-                const currentSection = document.querySelector('.section.active');
                 const nextSectionId = this.getAttribute('data-next');
+                
+                if (nextSectionId === '2' && !map) {
+                    setTimeout(() => {
+                        map = initializeMap();
+                    }, 300);
+                }
+                
+                const currentSection = document.querySelector('.section.active');
                 const nextSection = document.getElementById(`section-${nextSectionId}`);
                 
                 document.querySelectorAll('.step').forEach(step => {
@@ -777,7 +951,6 @@
                 const prevSectionId = this.getAttribute('data-prev');
                 const prevSection = document.getElementById(`section-${prevSectionId}`);
                 
-                // Actualizar pasos de progreso
                 document.querySelectorAll('.step').forEach(step => {
                     if (parseInt(step.getAttribute('data-step')) === parseInt(prevSectionId)) {
                         step.classList.add('active');
@@ -793,8 +966,9 @@
             });
         });
         
-        document.getElementById('gestion').addEventListener('change', function() {
-            document.getElementById('gestion-otros').style.display = 
+        // Manejo de campos "otros"
+        document.getElementById('tipo-gestion-alarma').addEventListener('change', function() {
+            document.getElementById('tipo-gestion-alarma-otros').style.display = 
                 this.value === 'otros' ? 'block' : 'none';
         });
         
@@ -803,8 +977,8 @@
                 this.value === 'otros' ? 'block' : 'none';
         });
         
-        document.getElementById('tipo-activacion').addEventListener('change', function() {
-            document.getElementById('activacion-otros').style.display = 
+        document.getElementById('tipo-dispositivo-activacion').addEventListener('change', function() {
+            document.getElementById('tipo-dispositivo-activacion-otros').style.display = 
                 this.value === 'otros' ? 'block' : 'none';
         });
         
@@ -813,13 +987,13 @@
                 this.value === 'otros' ? 'block' : 'none';
         });
         
-        document.getElementById('acuerdos').addEventListener('change', function() {
-            document.getElementById('acuerdos-otros').style.display = 
+        document.getElementById('acuerdo-uso-responsable').addEventListener('change', function() {
+            document.getElementById('acuerdo-uso-responsable-otros').style.display = 
                 this.value === 'otros' ? 'block' : 'none';
         });
         
-        document.getElementById('comunicacion-redes').addEventListener('change', function() {
-            document.getElementById('comunicacion-redes-otros').style.display = 
+        document.getElementById('comunicacion-via-redes').addEventListener('change', function() {
+            document.getElementById('comunicacion-via-redes-otros').style.display = 
                 this.value === 'otros' ? 'block' : 'none';
         });
         
@@ -828,15 +1002,15 @@
                 this.checked ? 'block' : 'none';
         });
         
-        document.getElementById('redes-otros').addEventListener('change', function() {
-            document.getElementById('redes-otros-texto').style.display = 
+        document.getElementById('redes-comunicacion-otros').addEventListener('change', function() {
+            document.getElementById('redes-comunicacion-otros-texto').style.display = 
                 this.checked ? 'block' : 'none';
         });
         
-        document.getElementById('alarmForm').addEventListener('submit', function(e) {
+        document.getElementById('alarmForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            if (!document.getElementById('latitud').value) {
+            if (!document.getElementById('coordenadas').value) {
                 alert('Por favor, seleccione una ubicación en el mapa antes de enviar el formulario.');
                 document.querySelectorAll('.section').forEach(section => {
                     section.classList.remove('active');
@@ -845,25 +1019,73 @@
                 return;
             }
             
-
-            alert('Formulario enviado correctamente. Gracias por su participación.');
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
             
-            this.reset();
-            if (marker) {
-                map.removeLayer(marker);
-                marker = null;
+            try {
+                const formData = new FormData(this);
+                const data = {};
+                
+                for (let [key, value] of formData.entries()) {
+                    if (key === 'componentes' || key === 'redes-comunicacion') {
+                        if (!data[key]) data[key] = [];
+                        data[key].push(value);
+                    } else {
+                        data[key] = value;
+                    }
+                }
+                
+                if (data.componentes) {
+                    data.componentes = data.componentes.join(', ');
+                }
+                if (data['redes-comunicacion']) {
+                    data['redes-comunicacion'] = data['redes-comunicacion'].join(', ');
+                }
+                
+                const response = await fetch(SHEETBEST_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    
+                    this.reset();
+                    if (window.marker) {
+                        map.removeLayer(window.marker);
+                        window.marker = null;
+                    }
+                    document.getElementById('coordinates').textContent = 'Coordenadas: No seleccionadas';
+                    
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById('section-1').classList.add('active');
+                    
+                    document.querySelectorAll('.step').forEach(step => {
+                        step.classList.remove('active', 'completed');
+                    });
+                    document.querySelector('.step[data-step="1"]').classList.add('active');
+                    
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('submitBtn').disabled = false;
+                    
+                } else {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorText').textContent = 'Ha ocurrido un error al enviar el formulario. Por favor, intente nuevamente.';
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
             }
-            document.getElementById('coordinates').textContent = 'Coordenadas: No seleccionadas';
-            
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById('section-1').classList.add('active');
-            
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active', 'completed');
-            });
-            document.querySelector('.step[data-step="1"]').classList.add('active');
         });
         
         document.getElementById('fecha').valueAsDate = new Date();
