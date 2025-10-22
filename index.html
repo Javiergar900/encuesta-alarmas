@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan de Relevamiento de Alarmas Comunitarias</title>
+    <title>Plan Municipal de Alarmas Comunitarias</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -156,7 +156,7 @@
             padding: 10px 12px;
             border: 2px solid var(--gray);
             border-radius: 6px;
-            font-size: 16px; 
+            font-size: 16px; /* Importante para zoom en móviles */
             transition: all 0.3s;
             background-color: var(--light);
         }
@@ -412,7 +412,6 @@
             border-left: 5px solid #dc3545;
         }
         
-        /* Mejoras de responsividad para móviles */
         @media (max-width: 768px) {
             .container {
                 padding: 0 10px;
@@ -472,7 +471,7 @@
             }
             
             input, select, textarea {
-                font-size: 16px;
+                font-size: 16px; 
             }
         }
         
@@ -529,12 +528,27 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary);
         }
+
+        .conditional-section {
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .conditional-section.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Plan de Relevamiento de Alarmas Comunitarias</h1>
+            <h1> Plan de Relevamiento de Alarmas Comunitarias</h1>
             <p>Municipalidad de La Plata - Secretaría de Seguridad</p>
         </header>
         
@@ -595,7 +609,33 @@
                             
                             <div class="form-group">
                                 <label for="zona-deleg">ZONA/DELEGACIÓN <span class="required">*</span></label>
-                                <input type="text" id="zona-deleg" name="zona-deleg" required>
+                                <select id="zona-deleg" name="zona-deleg" required>
+                                    <option value="">Seleccione una zona</option>
+                                    <option value="Abasto">Abasto</option>
+                                    <option value="Alt. San Lorenzo">Alt. San Lorenzo</option>
+                                    <option value="Arana">Arana</option>
+                                    <option value="Arturo Seguí">Arturo Seguí</option>
+                                    <option value="Casco Urbano">Casco Urbano</option>
+                                    <option value="City Bell">City Bell</option>                                    
+                                    <option value="El Peligro">El Peligro</option>
+                                    <option value="El Rincón">El Rincón</option>
+                                    <option value="Etcheverry">Etcheverry</option>                                    
+                                    <option value="Gonnet">Gonnet</option>
+                                    <option value="Gorina">Gorina</option>
+                                    <option value="Hernandez">Hernandez</option>
+                                    <option value="Lisandro Olmos">Lisandro Olmos</option>
+                                    <option value="Los Hornos">Los Hornos</option>                                    
+                                    <option value="Los Porteños">Los Porteños</option>
+                                    <option value="Melchor Romero">Melchor Romero</option>
+                                    <option value="Parque Sicardi- Villa Garibaldi">Parque Sicardi- Villa Garibaldi</option>                                    
+                                    <option value="Ringuelet">Ringuelet</option>
+                                    <option value="San Carlos">San Carlos</option>
+                                    <option value="Savoia">Savoia</option>
+                                    <option value="Tolosa">Tolosa</option>                                    
+                                    <option value="Villa Elisa">Villa Elisa</option>
+                                    <option value="Villa Castells">Villa Castells</option>
+                                    <option value="Villa Elvira">Villa Elvira</option>
+                                </select>
                             </div>
                         </div>
                         
@@ -618,7 +658,7 @@
                         <i>📍</i> MAPEO DE ALARMA VECINAL
                     </div>
                     <div class="card-body">
-                        <p>Seleccione con el pin y de la forma mas precisa posible el lugar en la que se encuentran emplazadas las alarmas vecinales</p>
+                        <p>Seleccione en el mapa la calle en la que se encuentran emplazadas las alarmas vecinales</p>
                         
                         <div id="map" class="map-container"></div>
                         <div class="coordinates-display" id="coordinates">
@@ -669,7 +709,7 @@
                                     <option value="barrio">BARRIO</option>
                                     <option value="otros">Otros</option>
                                 </select>
-                                <input type="text" id="tipo-gestion-alarma-otros" name="tipo-gestion-alarma-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                                <input type="text" id="tipo-gestion-alarma-otros" name="otros-tipo-gestion-alarma" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                             </div>
                         </div>
                         
@@ -698,8 +738,8 @@
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="cantidad-sirenas">CANTIDAD DE SIRENA POR GRUPO DE VECINOS (SOLO NÚMERO) <span class="required">*</span></label>
-                                <input type="number" id="cantidad-sirenas" name="cantidad-sirenas" min="0" required>
+                                <label for="cantidad-sirena">CANTIDAD DE SIRENA POR GRUPO DE VECINOS (SOLO NÚMERO) <span class="required">*</span></label>
+                                <input type="number" id="cantidad-sirena" name="cantidad-sirena" min="0" required>
                             </div>
                             
                             <div class="form-group">
@@ -709,15 +749,15 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="tipo-dispositivo-activacion">TIPO DE DISPOSITIVO DE ACTIVACIÓN <span class="required">*</span></label>
-                            <select id="tipo-dispositivo-activacion" name="tipo-dispositivo-activacion" required>
+                            <label for="tipo-dispositivo-activación">TIPO DE DISPOSITIVO DE ACTIVACIÓN <span class="required">*</span></label>
+                            <select id="tipo-dispositivo-activación" name="tipo-dispositivo-activación" required>
                                 <option value="">Seleccione una opción</option>
                                 <option value="boton-fisico">PULSADOR POR BOTÓN FÍSICO (RF)</option>
                                 <option value="telefono">PULSADOR POR TELÉFONO (GSM/GPRS)</option>
                                 <option value="dual">PULSADOR DUAL</option>
                                 <option value="otros">Otros</option>
                             </select>
-                            <input type="text" id="tipo-dispositivo-activacion-otros" name="tipo-dispositivo-activacion-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                            <input type="text" id="tipo-dispositivo-activación-otros" name="otro-tipo-dispositivo-activación" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                         </div>
                         
                         <div class="form-group">
@@ -772,7 +812,7 @@
                                 <option value="nulo">NULO</option>
                                 <option value="otros">Otros</option>
                             </select>
-                            <input type="text" id="mantenimiento-otros" name="mantenimiento-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                            <input type="text" id="mantenimiento-otros" name="otro-mantenimiento" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                         </div>
                     </div>
                 </div>
@@ -799,7 +839,7 @@
                                     <option value="no">No</option>
                                     <option value="otros">Otros</option>
                                 </select>
-                                <input type="text" id="acuerdo-uso-responsable-otros" name="acuerdo-uso-responsable-otros" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
+                                <input type="text" id="acuerdo-uso-responsable-otros" name="otro-acuerdo-uso-responsable" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                             </div>
                             
                             <div class="form-group">
@@ -814,27 +854,29 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label>REDES DIGITALES DE COMUNICACIÓN</label>
-                            <div class="checkbox-group">
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="whatsapp" name="redes-comunicacion" value="whatsapp">
-                                    <label for="whatsapp">WHATSAPP</label>
+                        <div class="conditional-section" id="redes-comunicacion-section">
+                            <div class="form-group">
+                                <label>REDES DIGITALES DE COMUNICACIÓN</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="whatsapp" name="redes-comunicacion" value="whatsapp">
+                                        <label for="whatsapp">WHATSAPP</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="facebook" name="redes-comunicacion" value="facebook">
+                                        <label for="facebook">FACEBOOK</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="ninguna-red" name="redes-comunicacion" value="ninguna">
+                                        <label for="ninguna-red">NINGUNA</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="redes-comunicacion-otros" name="redes-comunicacion" value="otros">
+                                        <label for="redes-comunicacion-otros">Otros</label>
+                                    </div>
                                 </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="facebook" name="redes-comunicacion" value="facebook">
-                                    <label for="facebook">FACEBOOK</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="ninguna-red" name="redes-comunicacion" value="ninguna">
-                                    <label for="ninguna-red">NINGUNA</label>
-                                </div>
-                                <div class="checkbox-item">
-                                    <input type="checkbox" id="redes-comunicacion-otros" name="redes-comunicacion" value="otros">
-                                    <label for="redes-comunicacion-otros">Otros</label>
-                                </div>
+                                <input type="text" id="redes-comunicacion-otros-texto" name="otro-redes-comunicacion" placeholder="Especifique otras redes" style="display: none; margin-top: 10px;">
                             </div>
-                            <input type="text" id="redes-comunicacion-otros-texto" name="redes-comunicacion-otros-texto" placeholder="Especifique otras redes" style="display: none; margin-top: 10px;">
                         </div>
                         
                         <div class="form-group">
@@ -966,7 +1008,6 @@
             });
         });
         
-        // Manejo de campos "otros"
         document.getElementById('tipo-gestion-alarma').addEventListener('change', function() {
             document.getElementById('tipo-gestion-alarma-otros').style.display = 
                 this.value === 'otros' ? 'block' : 'none';
@@ -977,8 +1018,8 @@
                 this.value === 'otros' ? 'block' : 'none';
         });
         
-        document.getElementById('tipo-dispositivo-activacion').addEventListener('change', function() {
-            document.getElementById('tipo-dispositivo-activacion-otros').style.display = 
+        document.getElementById('tipo-dispositivo-activación').addEventListener('change', function() {
+            document.getElementById('tipo-dispositivo-activación-otros').style.display = 
                 this.value === 'otros' ? 'block' : 'none';
         });
         
@@ -995,6 +1036,18 @@
         document.getElementById('comunicacion-via-redes').addEventListener('change', function() {
             document.getElementById('comunicacion-via-redes-otros').style.display = 
                 this.value === 'otros' ? 'block' : 'none';
+            
+            const redesSection = document.getElementById('redes-comunicacion-section');
+            if (this.value === 'si') {
+                redesSection.classList.add('show');
+            } else {
+                redesSection.classList.remove('show');
+                document.querySelectorAll('input[name="redes-comunicacion"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                document.getElementById('redes-comunicacion-otros-texto').style.display = 'none';
+                document.getElementById('redes-comunicacion-otros-texto').value = '';
+            }
         });
         
         document.getElementById('componentes-otros').addEventListener('change', function() {
@@ -1042,6 +1095,8 @@
                     data['redes-comunicacion'] = data['redes-comunicacion'].join(', ');
                 }
                 
+                console.log('Datos a enviar:', data); 
+                
                 const response = await fetch(SHEETBEST_API_URL, {
                     method: 'POST',
                     headers: {
@@ -1060,6 +1115,8 @@
                         window.marker = null;
                     }
                     document.getElementById('coordinates').textContent = 'Coordenadas: No seleccionadas';
+                    
+                    document.getElementById('redes-comunicacion-section').classList.remove('show');
                     
                     document.querySelectorAll('.section').forEach(section => {
                         section.classList.remove('active');
