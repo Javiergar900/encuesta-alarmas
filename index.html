@@ -25,6 +25,8 @@
             --text: #34495e;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             --radius: 10px;
+            --error: #e74c3c;
+            --warning: #f39c12;
         }
         
         body {
@@ -156,7 +158,7 @@
             padding: 10px 12px;
             border: 2px solid var(--gray);
             border-radius: 6px;
-            font-size: 16px; /* Importante para zoom en móviles */
+            font-size: 16px; 
             transition: all 0.3s;
             background-color: var(--light);
         }
@@ -412,6 +414,169 @@
             border-left: 5px solid #dc3545;
         }
         
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .validation-modal {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: modalSlideIn 0.4s ease forwards;
+        }
+        
+        .modal-header {
+            background: linear-gradient(to right, var(--warning), #e67e22);
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        .modal-header i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-body h3 {
+            color: var(--secondary);
+            margin-bottom: 12px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .modal-body p {
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .missing-fields {
+            background-color: #fff9e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--warning);
+        }
+        
+        .missing-fields h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 8px;
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+        
+        .missing-fields ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .missing-fields li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .missing-fields li:before {
+            content: "•";
+            color: var(--warning);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .modal-btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .modal-btn-primary:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .modal-btn-secondary {
+            background-color: var(--light);
+            color: var(--secondary);
+            border: 1px solid #ced4da;
+        }
+        
+        .modal-btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes modalSlideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .field-error {
+            border-color: var(--error) !important;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2) !important;
+        }
+        
+        .error-label {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .error-label i {
+            margin-right: 5px;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 0 10px;
@@ -472,6 +637,19 @@
             
             input, select, textarea {
                 font-size: 16px; 
+            }
+            
+            .validation-modal {
+                width: 95%;
+                margin: 0 10px;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
             }
         }
         
@@ -575,6 +753,28 @@
         <div class="error-message" id="errorMessage">
             <h3>❌ Error al enviar el formulario</h3>
             <p id="errorText">Ha ocurrido un error. Por favor, intente nuevamente.</p>
+        </div>
+        
+        <div class="modal-overlay" id="validationModal">
+            <div class="validation-modal">
+                <div class="modal-header">
+                    <i>⚠️</i> Campos obligatorios incompletos
+                </div>
+                <div class="modal-body">
+                    <h3>Complete los campos requeridos</h3>
+                    <p>Para continuar, debe completar todos los campos obligatorios marcados con <span class="required">*</span>.</p>
+                    
+                    <div class="missing-fields">
+                        <h4>Campos pendientes:</h4>
+                        <ul id="missingFieldsList">
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-secondary" id="closeModalBtn">Cerrar</button>
+                    <button class="modal-btn modal-btn-primary" id="goToSectionBtn">Ir a completar campos</button>
+                </div>
+            </div>
         </div>
         
         <form id="alarmForm">
@@ -814,6 +1014,16 @@
                             </select>
                             <input type="text" id="mantenimiento-otros" name="otro-mantenimiento" placeholder="Especifique otros" style="display: none; margin-top: 10px;">
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="frecuencia-uso">FRECUENCIA DE USO <span class="required">*</span></label>
+                            <select id="frecuencia-uso" name="frecuencia-uso" required>
+                                <option value="">Seleccione una opción</option>
+                                <option value="poco-frecuente">POCO FRECUENTE</option>
+                                <option value="muy-frecuente">MUY FRECUENTE</option>
+                                <option value="nula">NULA</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 
@@ -879,15 +1089,6 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="frecuencia-uso">FRECUENCIA DE USO <span class="required">*</span></label>
-                            <select id="frecuencia-uso" name="frecuencia-uso" required>
-                                <option value="">Seleccione una opción</option>
-                                <option value="poco-frecuente">POCO FRECUENTE</option>
-                                <option value="muy-frecuente">MUY FRECUENTE</option>
-                                <option value="nula">NULA</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
                 
@@ -929,6 +1130,9 @@
     <script>
         const SHEETBEST_API_URL = 'https://api.sheetbest.com/sheets/4115349e-52ff-494a-8a41-9e690ffb17b4';
         
+        let currentSection = 1;
+        let targetSection = null;
+        
         function initializeMap() {
             var map = L.map('map').setView([-34.9214, -57.9544], 13);
             
@@ -958,10 +1162,94 @@
             return map;
         }
         
+        function validateSection(sectionId) {
+            const section = document.getElementById(`section-${sectionId}`);
+            const requiredFields = section.querySelectorAll('[required]');
+            const missingFields = [];
+            
+            requiredFields.forEach(field => {
+                if (field.type === 'text' || field.type === 'tel' || field.type === 'number' || field.tagName === 'TEXTAREA') {
+                    if (!field.value.trim()) {
+                        missingFields.push({
+                            field: field,
+                            label: field.previousElementSibling ? field.previousElementSibling.textContent.replace('*', '').trim() : 'Campo sin etiqueta'
+                        });
+                    }
+                }
+                else if (field.tagName === 'SELECT') {
+                    if (!field.value) {
+                        missingFields.push({
+                            field: field,
+                            label: field.previousElementSibling ? field.previousElementSibling.textContent.replace('*', '').trim() : 'Campo sin etiqueta'
+                        });
+                    }
+                }
+                else if (field.type === 'checkbox') {
+                    if (!field.checked) {
+                        missingFields.push({
+                            field: field,
+                            label: field.nextElementSibling ? field.nextElementSibling.textContent.replace('*', '').trim() : 'Campo sin etiqueta'
+                        });
+                    }
+                }
+            });
+            
+            return missingFields;
+        }
+        
+        function showValidationModal(missingFields, targetSectionId) {
+            const modal = document.getElementById('validationModal');
+            const missingFieldsList = document.getElementById('missingFieldsList');
+            const goToSectionBtn = document.getElementById('goToSectionBtn');
+            
+            missingFieldsList.innerHTML = '';
+            
+            missingFields.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = item.label;
+                missingFieldsList.appendChild(listItem);
+            });
+            
+            goToSectionBtn.onclick = function() {
+                modal.classList.remove('active');
+                
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(`section-${targetSectionId}`).classList.add('active');
+                
+                document.querySelectorAll('.step').forEach(step => {
+                    step.classList.remove('active');
+                    if (parseInt(step.getAttribute('data-step')) === targetSectionId) {
+                        step.classList.add('active');
+                    }
+                });
+                
+                if (missingFields.length > 0) {
+                    missingFields[0].field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    missingFields[0].field.classList.add('field-error');
+                    
+                    setTimeout(() => {
+                        missingFields[0].field.classList.remove('field-error');
+                    }, 3000);
+                }
+            };
+            
+            modal.classList.add('active');
+        }
+        
         let map;
         document.querySelectorAll('.next-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const nextSectionId = this.getAttribute('data-next');
+                targetSection = nextSectionId;
+                
+                const missingFields = validateSection(currentSection);
+                
+                if (missingFields.length > 0) {
+                    showValidationModal(missingFields, currentSection);
+                    return;
+                }
                 
                 if (nextSectionId === '2' && !map) {
                     setTimeout(() => {
@@ -969,7 +1257,7 @@
                     }, 300);
                 }
                 
-                const currentSection = document.querySelector('.section.active');
+                const currentSectionEl = document.querySelector('.section.active');
                 const nextSection = document.getElementById(`section-${nextSectionId}`);
                 
                 document.querySelectorAll('.step').forEach(step => {
@@ -982,14 +1270,16 @@
                     }
                 });
                 
-                currentSection.classList.remove('active');
+                currentSectionEl.classList.remove('active');
                 nextSection.classList.add('active');
+                
+                currentSection = parseInt(nextSectionId);
             });
         });
         
         document.querySelectorAll('.prev-btn').forEach(button => {
             button.addEventListener('click', function() {
-                const currentSection = document.querySelector('.section.active');
+                const currentSectionEl = document.querySelector('.section.active');
                 const prevSectionId = this.getAttribute('data-prev');
                 const prevSection = document.getElementById(`section-${prevSectionId}`);
                 
@@ -1003,9 +1293,21 @@
                     }
                 });
                 
-                currentSection.classList.remove('active');
+                currentSectionEl.classList.remove('active');
                 prevSection.classList.add('active');
+                
+                currentSection = parseInt(prevSectionId);
             });
+        });
+        
+        document.getElementById('closeModalBtn').addEventListener('click', function() {
+            document.getElementById('validationModal').classList.remove('active');
+        });
+        
+        document.getElementById('validationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
         });
         
         document.getElementById('tipo-gestion-alarma').addEventListener('change', function() {
@@ -1063,12 +1365,21 @@
         document.getElementById('alarmForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            let allMissingFields = [];
+            for (let i = 1; i <= 5; i++) {
+                const sectionMissingFields = validateSection(i);
+                allMissingFields = allMissingFields.concat(sectionMissingFields);
+            }
+            
             if (!document.getElementById('coordenadas').value) {
-                alert('Por favor, seleccione una ubicación en el mapa antes de enviar el formulario.');
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('active');
+                allMissingFields.push({
+                    field: document.getElementById('map'),
+                    label: 'Ubicación en el mapa'
                 });
-                document.getElementById('section-2').classList.add('active');
+            }
+            
+            if (allMissingFields.length > 0) {
+                showValidationModal(allMissingFields, 1);
                 return;
             }
             
